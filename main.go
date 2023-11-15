@@ -85,6 +85,9 @@ func main() {
 			case mouse.Event:
 				switch e.Button {
 				case 1: // Click
+					if e.Direction != 2 {
+						continue
+					}
 					index := int(e.Y)/lineHeight + lineOffset
 					if len(games)-1 < index {
 						continue
@@ -139,7 +142,7 @@ func UpdateGrid() {
 						Face: basicfont.Face7x13,
 						Dot:  fixed.P(0, y-(fontHeight-lineHeight)),
 					}
-					d.DrawString(fmt.Sprintf("% 4d", y/lineHeight+lineOffset))
+					d.DrawString(fmt.Sprintf("% 4d", y/lineHeight+lineOffset+1))
 				}
 				continue
 			}
