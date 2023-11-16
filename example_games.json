@@ -1,6 +1,7 @@
 [
   {
     "name":"Game Name",
-    "path":"C:\\Users\\aatomu\\Game.exe"
+    "path":"C:\\Users\\aatomu\\Game.exe",
+    "args":""
   }
 ]

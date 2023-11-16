@@ -10,6 +10,8 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
+	"strings"
 
 	"golang.org/x/exp/shiny/driver"
 	"golang.org/x/exp/shiny/screen"
@@ -44,6 +46,7 @@ var (
 type Game struct {
 	Name string `json:"name"`
 	Path string `json:"path"`
+	Args string `json:"args"`
 }
 
 func main() {
@@ -85,14 +88,19 @@ func main() {
 			case mouse.Event:
 				switch e.Button {
 				case 1: // Click
+					// Check Click End
 					if e.Direction != 2 {
 						continue
 					}
+					// Game Check
 					index := int(e.Y)/lineHeight + lineOffset
 					if len(games)-1 < index {
 						continue
 					}
-					err := exec.Command(games[index].Path).Start()
+					// Move WorkDir
+					game := games[index]
+					os.Chdir(filepath.Dir(game.Path))
+					err := exec.Command(game.Path, strings.Split(game.Args, " ")...).Start()
 					if err != nil {
 						panic(err)
 					}
